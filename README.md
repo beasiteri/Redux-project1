@@ -21,3 +21,5 @@ The app handle adding, removing and toggling todo items.
 There are two reducers: __todo__ and __goal__
 
 Whenever _dispatch_ is called, we invoke our _app_ function (the _roote_ reducer). The _app_ function will then invoke the _todos_ reducer as well as the _goals_ reducer. Those will return their specific portions of the state. And then, the _app_ function will return a state object with a todos property (the value of which is what the todos reducer returned) and a goals property (the value of which is what the goals reducer returned).
+
+Finally, we added action creators to the store. 
