@@ -36,6 +36,7 @@ function createStore(reducer) {
 // APP CODE
 // reducer function - takes in the current state and an action that occurred,
 // and returns the new state of app 
+// todos reducer
 function todos (state = [], action) {
     switch(action.type) {
         case 'ADD_TODO' :
@@ -50,6 +51,7 @@ function todos (state = [], action) {
     }
 }
 
+// goals reducer
 function goals (state = [], action) {
     switch(action.type) {
         case 'ADD_GOAL' :
@@ -61,6 +63,7 @@ function goals (state = [], action) {
     }
 }
 
+// app - root reducer
 function app (state = {}, action) {
     return {
       todos: todos(state.todos, action),
