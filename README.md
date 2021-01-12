@@ -16,3 +16,4 @@ This project contain the following functions:
     * __subscribe()__ - used to provide a listener function the store will call when the state changes
     * __dispatch()__ - used to make changes to the store's state  
 
+The app handle adding, removing and toggling todo items.
