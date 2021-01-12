@@ -2,7 +2,7 @@
 
 This is a Udacity Redux learning mini project.
 
-## Managing State: 
+## Managing State
 We learn techniques to make the state more predictable 
 by moving the state to a central location and establishing strict rules for:
 
@@ -17,3 +17,6 @@ This project contain the following functions:
     * __dispatch()__ - used to make changes to the store's state  
 
 The app handle adding, removing and toggling todo items.
+
+There are two reducers: __todo__ and __goal__
+Whenever _dispatch_ is called, we invoke our _app_ function (the _roote_ reducer). The _app_ function will then invoke the _todos_ reducer as well as the _goals_ reducer. Those will return their specific portions of the state. And then, the _app_ function will return a state object with a todos property (the value of which is what the todos reducer returned) and a goals property (the value of which is what the goals reducer returned).
