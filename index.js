@@ -43,7 +43,9 @@ const TOGGLE_TODO = 'TOGGLE_TODO'
 const ADD_GOAL = 'ADD_GOAL'
 const REMOVE_GOAL = 'REMOVE_GOAL'
 
+// action creators
 function addTodoAction (todo) {
+  // this return a Redux action with a 'type' property that has a value of 'ADD_TODO'
   return {
     type: ADD_TODO,
     todo,
