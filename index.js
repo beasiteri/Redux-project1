@@ -1,4 +1,6 @@
-function todos(state, action) {
+// reducer function - takes in the current state and an action that occurred,
+// and returns the new state of app 
+function todos(state = [], action) {
     if(action.type === 'ADD_TODO') {
         return state.concat([state.todo])
     }
@@ -15,10 +17,10 @@ function createStore() {
     let state
     let listeners = []
 
-    // this function returns the existing state variable
+    // get initial state - this function returns the existing state variable
     const getState = () => state
 
-    // listens for change
+    // listens to changes on the state
     const subscribe = (listener) => {
         listeners.push(listener)
         return () => {
@@ -26,9 +28,16 @@ function createStore() {
         }
     }
 
+    // update state of our store
+    const dispatch = (action) => {
+        state = todos(state, action)
+        listeners.forEach((listener) => listener())
+    }
+
     return {
         getState,
-        subscribe
+        subscribe,
+        dispatch
     }
 }
 
