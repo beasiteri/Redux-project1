@@ -1,13 +1,5 @@
-// reducer function - takes in the current state and an action that occurred,
-// and returns the new state of app 
-function todos(state = [], action) {
-    if(action.type === 'ADD_TODO') {
-        return state.concat([state.todo])
-    }
-    return state
-}
-
-function createStore() {
+// LIBRARY CODE
+function createStore(reducer) {
     // The Store should have four parts
     // 1. The state - to manage this state
     // 2. Get the state - to provide an API or a way to get the state
@@ -30,7 +22,7 @@ function createStore() {
 
     // update state of our store
     const dispatch = (action) => {
-        state = todos(state, action)
+        state = reducer(state, action)
         listeners.forEach((listener) => listener())
     }
 
@@ -41,13 +33,12 @@ function createStore() {
     }
 }
 
-const store = createStore()
-store.subscribe(() => {
-    console.log('The new state is: ', store.getState())
-})
-
-const unsubscribe = store.subscribe(() => {
-    console.log('The store changed.')
-})
-
-unsubscribe();
+// APP CODE
+// reducer function - takes in the current state and an action that occurred,
+// and returns the new state of app 
+function todos(state = [], action) {
+    if(action.type === 'ADD_TODO') {
+        return state.concat([state.todo])
+    }
+    return state
+}
