@@ -148,7 +148,7 @@
 
 
         // actions
-        store.dispatch(addTodoAction({
+       /*  store.dispatch(addTodoAction({
             id: 0,
             name: 'Walk the dog',
             complete: false,
@@ -180,7 +180,38 @@
             name: 'Lose 20 pounds'
         }))
         
-        store.dispatch(removeGoalAction(0))
+        store.dispatch(removeGoalAction(0)) */
+
+        // get todo input value
+        function addTodo () {
+            const input = document.getElementById('todo')
+            const name = input.value
+            input.value = ''
+
+            store.dispatch(addTodoAction({
+                name,
+                complete: false,
+                id: generateId()
+            }))
+        }
+
+        // get goal input value
+        function addGoal () {
+            const input = document.getElementById('goal')
+            const name = input.value
+            input.value = ''
+
+            store.dispatch(addGoalAction({
+                id: generateId(),
+                name,
+            }))
+        }
+
+        // eventListener for todo button
+        document.getElementById('todoBtn').addEventListener('click', addTodo)
+
+        // eventListener for goal button
+        document.getElementById('goalBtn').addEventListener('click', addGoal)
     </script>
 </body>
 </html>
