@@ -231,11 +231,25 @@
         // eventListener for goal button
         document.getElementById('goalBtn').addEventListener('click', addGoal);
 
+        // create remove button
+        function createRemoveButton (onClick) {
+            const removeBtn = document.createElement('button');
+            removeBtn.innerHTML = 'x';
+            removeBtn.addEventListener('click', onClick);
+            return removeBtn;
+        }
+
+        // add todo to DOM + toggle
         function addTodoToDOM (todo) {
             const node = document.createElement('li');
             const text = document.createTextNode(todo.name);
-            node.appendChild(text);
 
+            const removeBtn = createRemoveButton(() => {
+                store.dispatch(removeTodoAction(todo.id))
+            });
+
+            node.appendChild(text);
+            node.appendChild(removeBtn);
             node.style.textDecoration = todo.complete ? 'line-through' : 'none';
             node.addEventListener('click', () => {
                 store.dispatch(toggleTodoAction(todo.id))
@@ -244,11 +258,17 @@
             document.getElementById('todos').appendChild(node);
         }
 
+        // add goal to DOM + toggle
         function addGoalToDOM (goal) {
             const node = document.createElement('li');
             const text = document.createTextNode(goal.name);
-            node.appendChild(text);
 
+            const removeBtn = createRemoveButton(() => {
+                store.dispatch(removeGoalAction(goal.id))
+            });
+
+            node.appendChild(text);
+            node.appendChild(removeBtn);
             node.style.textDecoration = goal.complete ? 'line-through' : 'none';
             node.addEventListener('click', () => {
                 store.dispatch(toggleGoalAction(goal.id))
