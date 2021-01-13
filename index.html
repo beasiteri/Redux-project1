@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Udacity Todo Goals</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js"></script>
 </head>
 <body>
     <div>
@@ -24,41 +25,6 @@
             return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
         }
         
-        // LIBRARY CODE
-        function createStore(reducer) {
-            // The Store should have four parts
-            // 1. The state - to manage this state
-            // 2. Get the state - to provide an API or a way to get the state
-            // 3. Listen to the changes on the state
-            // 4. Update the state
-
-            let state;
-            let listeners = [];
-
-            // get initial state - this function returns the existing state variable
-            const getState = () => state;
-
-            // listens to changes on the state
-            const subscribe = (listener) => {
-                listeners.push(listener);
-                return () => {
-                    listeners = listeners.filter((l) => l !== listener);
-                }
-            }
-
-            // update state of our store
-            const dispatch = (action) => {
-                state = reducer(state, action);
-                listeners.forEach((listener) => listener());
-            }
-
-            return {
-                getState,
-                subscribe,
-                dispatch,
-            }
-        }
-
         // APP CODE
         // reducer function - takes in the current state and an action that occurred,
         // and returns the new state of app 
@@ -143,16 +109,13 @@
             }
         }
 
-        // app - root reducer
-        function app (state = {}, action) {
-            return {
-                todos: todos(state.todos, action),
-                goals: goals(state.goals, action),
-            }
-        }
+        // root reducer
+        const store = Redux.createStore(Redux.combineReducers({
+            todos,
+            goals,
+        }));
 
-        const store = createStore(app);
-
+        // listener
         store.subscribe(() => {
             const { todos, goals } = store.getState();
 
@@ -162,42 +125,6 @@
             todos.forEach(addTodoToDOM);
             goals.forEach(addGoalToDOM);
         }) 
-
-
-        // actions
-       /*  store.dispatch(addTodoAction({
-            id: 0,
-            name: 'Walk the dog',
-            complete: false,
-        }))
-        
-        store.dispatch(addTodoAction({
-            id: 1,
-            name: 'Wash the car',
-            complete: false,
-        }))
-        
-        store.dispatch(addTodoAction({
-            id: 2,
-            name: 'Go to the gym',
-            complete: true,
-        }))
-        
-        store.dispatch(removeTodoAction(1))
-        
-        store.dispatch(toggleTodoAction(0))
-        
-        store.dispatch(addGoalAction({
-            id: 0,
-            name: 'Learn Redux'
-        }))
-        
-        store.dispatch(addGoalAction({
-            id: 1,
-            name: 'Lose 20 pounds'
-        }))
-        
-        store.dispatch(removeGoalAction(0)) */
 
         // get todo input value
         function addTodo () {
