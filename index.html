@@ -121,7 +121,7 @@
             return next(action);
         }
 
-        // root reducer
+        // root reducer function , middleware functions
         const store = Redux.createStore(Redux.combineReducers({
             todos,
             goals,
