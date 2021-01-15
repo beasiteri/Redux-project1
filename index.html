@@ -102,6 +102,18 @@
             }
         }
 
+        function handleToggleTodo (id) {
+            return (dispatch) => {
+                dispatch(toggleTodoAction(id))
+
+                return API.saveTodoToggle(id)
+                    .catch(() => {
+                        dispatch(toggleTodoAction(id));
+                        alert('An error occurred. Try again.');
+                })
+            }
+        }
+
         function handleAddGoal (name, cb) {
           return (dispatch) => {
             return API.saveGoal(name)
@@ -123,6 +135,29 @@
                 alert('An error occurred. Try again.')
               })
           }
+        }
+
+        function handleToggleGoal (id) {
+            return (dispatch) => {
+                dispatch(toggleGoalAction(id))
+
+                return API.saveGoalToggle(id)
+                    .catch(() => {
+                        dispatch(toggleGoalAction(id));
+                        alert('An error occurred. Try again.');
+                })
+            }
+        }
+
+        function handleInitialData () {
+            return (dispatch) => {
+                return Promise.all([
+                  API.fetchTodos(),
+                  API.fetchGoals()
+                ]).then(([ todos, goals ]) => {
+                  dispatch(receiveDataAction(todos, goals))
+                })
+            }
         }
 
         // todo reducer
@@ -229,13 +264,7 @@
             }
 
             toggleItem = (id) => {
-                this.props.store.dispatch(toggleTodoAction(id));
-
-                return API.saveTodoToggle(id)
-                    .catch(() => {
-                        this.props.store.dispatch(toggleTodoAction(id));
-                        alert('An error occurred. Try again.');
-                })
+                this.props.store.dispatch(handleToggleTodo(id));
             }
 
             render() {
@@ -265,15 +294,9 @@
                 this.props.store.dispatch(handleDeleteGoal(goal));
             }
 
-            toggleItem = (id) => {
-                this.props.store.dispatch(toggleGoalAction(id));
-
-                //return API.saveGoalToggle(id)
-                    //.catch(() => {
-                        //this.props.store.dispatch(toggleGoalAction(id));
-                        //alert('An error occurred. Try again.');
-                //})
-            }
+            //toggleItem = (id) => {
+                //this.props.store.dispatch(handleToggleGoal(id));
+            //}
 
             render() {
                 return (
@@ -292,10 +315,7 @@
             componentDidMount () {
                 const { store } = this.props;
 
-                Promise.all([API.fetchTodos(),API.fetchGoals()])
-                    .then(([ todos, goals ]) => {
-                      store.dispatch(receiveDataAction(todos, goals));
-                })
+                store.dispatch(handleInitialData());
 
                 store.subscribe(() => this.forceUpdate());
             }
