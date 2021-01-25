@@ -1,6 +1,6 @@
-# Redux-project1
+# Learn react and redux 
 
-This is a Udacity Redux learning mini project.
+This is a Udacity react-redux learning mini project.
 
 ## Managing State
 We learn techniques to make the state more predictable 
